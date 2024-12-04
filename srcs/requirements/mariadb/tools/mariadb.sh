@@ -8,17 +8,14 @@ if [ ! -d "/run/mysqld" ]; then
 	chown -R mysql:mysql /run/mysqld
 fi
 
-echo "checking"
-
 if [ ! -d "/var/lib/mysql/mysql" ]
 then
 	echo "Mariadb already configured."
 else
 	echo "[DB config] Launching configuration script..."
 
-	cat /init.sql | envsubst
 	# Execution du script
-	cat /init.sql | envsubst | /usr/bin/mysqld --user=mysql --bootstrap --debug
+	cat /init.sql | envsubst | mysqld --user=mysql --bootstrap 2>/dev/null
 fi
 
 echo "[DB config] Accepting remote connexions..."

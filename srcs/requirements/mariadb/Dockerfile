@@ -13,7 +13,6 @@ RUN	apk add curl \
 #COPY	conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
 
 RUN	mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql
-#RUN	chown -R mysql:mysql /var/lib/mysql
 
 #	setting entrypoint
 

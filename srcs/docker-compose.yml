@@ -6,9 +6,10 @@ services:
   build:
    context: requirements/mariadb
    dockerfile: Dockerfile
+  image: mariadb
   env_file: .env		
   volumes:
-   - /home/theo/data/mariadb:/var/lib/mysql
+   - mariadb:/var/lib/mysql
   networks:
    - inception
   expose:
@@ -26,9 +27,10 @@ services:
   build:
    context: requirements/wordpress
    dockerfile: Dockerfile
+  image: wordpress
   env_file: .env
   volumes:
-   - /home/theo/data/wordpress:/var/www/html
+   - wordpress:/var/www/html
   depends_on:
    - mariadb
   networks:
@@ -42,9 +44,10 @@ services:
   build:
    context: requirements/nginx
    dockerfile: Dockerfile
+  image: nginx
   env_file: .env
   volumes:
-   - /home/theo/data/wordpress:/var/www/html
+   - wordpress:/var/www/html
   depends_on:
    - wordpress
   networks:
@@ -56,8 +59,16 @@ services:
 volumes:
   wordpress:
    driver: local
+   driver_opts:
+    type: none
+    device: "/home/flplace/data/wordpress"
+    o: bind
   mariadb:
    driver: local
+   driver_opts:
+    type: none
+    device: "/home/flplace/data/mariadb"
+    o: bind
 
 networks:
  inception:
